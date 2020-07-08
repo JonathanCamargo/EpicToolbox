@@ -1,0 +1,617 @@
+{
+	"Topics.average":
+	{
+		"inputs":
+		[
+			{
+				"name": "trials_array",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trials_array{1})",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.consolidate":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			},
+			{
+				"name": "ShortNames",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.cut":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "initial_time",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "final_time",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.cut":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "initial_time",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "final_time",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data{1})",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.cut":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "table",
+				"repeating": false
+			},
+			{
+				"name": "initial_time",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "final_time",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.demote":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			}
+
+		]
+	},
+	"Topics.demote":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data{1})",
+				"repeating": false
+			}
+
+		]
+	},
+	"Topics.interpolate":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "T",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.maxTime":
+	{
+		"inputs":
+		[
+			{
+				"name": "data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.merge":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data1",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "trial_data2",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.minTime":
+	{
+		"inputs":
+		[
+			{
+				"name": "data",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.normalize":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			},
+			{
+				"name": "Channels",
+				"kind": "ordered",
+				"type": [["char"], ["choices=fieldnames(trial_data.(Topics))"]],
+				"repeating": false
+			}
+		]
+	},
+	"Topics.normalize":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "Topics",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data{1})",
+				"repeating": false
+			},
+			{
+				"name": "Channels",
+				"kind": "ordered",
+				"type": [["char"], ["choices=fieldnames(trial_data{1}.(Topics))"]],
+				"repeating": false
+			}
+		]
+	},
+	"Topics.plot":
+	{
+		"inputs":
+		[
+			{
+				"name": "experiment_data",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(experiment_data)",
+				"repeating": false
+			},
+			{
+				"name": "phases",
+				"kind": "namevalue",
+				"type": ["logical", "scalar"],
+				"repeating": false
+			},
+			{
+				"name": "channels",
+				"kind": "namevalue",
+				"type": "choices=fieldnames(experiment_data.(topic_name))",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.processTopics":
+	{
+		"inputs":
+		[
+			{
+				"name": "fun",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(trial_data{1})",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.processTopics":
+	{
+		"inputs":
+		[
+			{
+				"name": "fun",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.processTrials":
+	{
+		"inputs":
+		[
+			{
+				"name": "fun",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "trials_array",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.promote":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.promote":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(trial_data{1})",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.remove":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.remove":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(trial_data{1})",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.resample_pad":
+	{
+		"inputs":
+		[
+			{
+				"name": "X",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "Tx",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "Fs",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.segment":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "intervals",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "messages_list",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.segment":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "intervals",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "messages_list",
+				"kind": "ordered",
+				"type": "choices=fieldnames(trial_data{1})",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.select":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(trial_data{1})",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.select":
+	{
+		"inputs":
+		[
+			{
+				"name": "trial_data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(trial_data)",
+				"repeating": false
+			}
+		]
+	},
+	"Topics.timeshift":
+	{
+		"inputs":
+		[
+			{
+				"name": "data",
+				"kind": "required",
+				"type": "struct",
+				"repeating": false
+			},
+			{
+				"name": "time",
+				"kind": "required",
+				"type": [["choices={'auto'}"], ["numeric"]],
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(data)",
+				"repeating": false
+			}
+
+		]
+	},
+	"Topics.timeshift":
+	{
+		"inputs":
+		[
+			{
+				"name": "data",
+				"kind": "required",
+				"type": "cell",
+				"repeating": false
+			},
+			{
+				"name": "time",
+				"kind": "required",
+				"type": [["choices={'auto'}"], ["numeric"]],
+				"repeating": false
+			},
+			{
+				"name": "topic_name",
+				"kind": "required",
+				"type": "choices=fieldnames(data{1})",
+				"repeating": false
+			}
+		]
+	}
+}

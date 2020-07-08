@@ -1,0 +1,32 @@
+%% How I would like to use this thing:
+
+Feature extraction:
+---------------------------------------------------------------------
+FileManager to get a list of files to train from
+Extract the features from those files once all of them are ready it is time to train.
+array of featureOptions
+create extractors
+slide extractors and generate files
+    (alternative) extract on a given section of the gc
+
+Model development:
+---------------------------------------------------------------------
+Build a model:
+     number of inputs, number of outputs
+     internal properties (hyperparameters, architecture)
+     type of model
+     training function
+     predict function *must be subsref overloading so we can use model(x)
+
+Model training
+---------------------------------------------------------------------
+Use the extracted features to train a model
+
+
+
+
+
+
+
+Do folds and save the resulting accuracy but for the folds
+it... %

@@ -1,0 +1,4 @@
+This file describes how to make a custom Feature Selector method
+
+1. Open FeatureSelector.m and add a function handle (ex. heuristic) to the Static methods list with a descriptive name that follows the format
+2. Write your function (ex. heuristic.m)

@@ -1,0 +1,1 @@
+Functions to filter gait cycles

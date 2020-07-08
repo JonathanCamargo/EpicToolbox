@@ -1,0 +1,148 @@
+
+{
+
+	"plot_imu":
+	{
+		"inputs":
+		[
+			{
+				"name": "experiment_data",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "phases",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "segments",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "channelsE",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "channelsQ",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"plot_kinematics":
+	{
+		"inputs":
+		[
+			{
+				"name": "experiment_data",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "phases",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "joints",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "channels",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"plot_loadcell":
+	{
+		"inputs":
+		[
+			{
+				"name": "experiment_data",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "phases",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "topic",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"plot_phases":
+	{
+		"inputs":
+		[
+			{
+				"name": "experiment_data",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"plot_power":
+	{
+		"inputs":
+		[
+			{
+				"name": "experiment_data",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "phases",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "joints",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			},
+			{
+				"name": "channels",
+				"kind": "namevalue",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	},
+	"plot_torques":
+	{
+		"inputs":
+		[
+			{
+				"name": "experiment_data",
+				"kind": "required",
+				"type": "@(~)true",
+				"repeating": false
+			}
+		]
+	}
+}

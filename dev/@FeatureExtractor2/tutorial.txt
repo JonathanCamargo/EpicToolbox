@@ -1,0 +1,7 @@
+This file describes how to make a custom Feature Extractor method
+
+1. Open FeatureExtractor.m and add a function handle (ex. TD_extract) to the Static methods list with a descriptive name that follows the format
+2. Add your extraction method name (ex. TD) to the help list
+3. Add you extraction method name (ex.TD) to Names in the constructor (FeatureExtractor), along with default value
+4. Copy the format in generateFeature with your function handle
+5. Write your function (ex. TD_extract.m)

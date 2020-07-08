@@ -1,0 +1,1 @@
+Functions to divide trial data in gait cycles
