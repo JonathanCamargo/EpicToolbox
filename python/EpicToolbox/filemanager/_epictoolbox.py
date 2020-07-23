@@ -12,8 +12,8 @@ def loadhdf(hdf5file,dataframe=True):
         #Read data and names and construct only dataframe
         out_data=f['data'][:]
         out_names_refs=f['names'][:]
-        a=[f[obj[0]][:] for obj in out_names_refs]
-        names=[''.join([chr(c) for c in b]) for b in a]
+        a=[f[obj[0]][:] for obj in out_names_refs]        
+        names=[''.join([chr(c[0]) for c in b]) for b in a] # python 3.8
         #names=[''.join(chr(c) for c in f[obj[0]]) for obj in out_names_refs]
 
         if dataframe:
