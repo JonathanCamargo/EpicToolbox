@@ -1,5 +1,5 @@
-from epictoolbox import Topics
-from epictoolbox import Topics
+from .topics import Topics
+from .topics import Topics
 import pandas as pd
 
 def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=None):
