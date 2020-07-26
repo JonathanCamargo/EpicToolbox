@@ -1,0 +1,39 @@
+# Example of Forward feature selection with the SequentialFeatureSelection class
+
+# Load dataset
+from sklearn import datasets
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import KFold
+
+a=sklearn.datasets.load_iris()
+x=a['data']
+y=a['target']
+x=np.concatenate([x,np.random.rand(150,5)],axis=1)
+print(x.shape)
+
+
+plt.scatter(x[y==0,3],x[y==0,2],color='red')
+plt.scatter(x[y==1,3],x[y==1,2],color='blue')
+plt.scatter(x[y==2,3],x[y==2,2],color='green')
+
+lr=0.05
+tol=0.001
+# Create a model to train
+model=MLPClassifier(hidden_layer_sizes=(10,10),max_iter=300,learning_rate_init=lr,tol=tol);
+# Create a criterion function to select the features
+# Use the cv_score function from the same package
+def scorer(model,x,ytruth):
+    y=model.predict(x)
+    return accuracy_score(ytruth,y)
+
+crit= lambda features: cv_score(model,scorer, x, y, features,cv=KFold(5))
+sfs=SequentialFeatureSelection(crit,x.shape[1],verbose=1)
+
+sfs.forward(1)
+
+print(sfs._results)
+
+#range(0,4)
