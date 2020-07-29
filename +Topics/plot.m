@@ -6,19 +6,16 @@ function [h,lgnd]=plot(experiment_data,topic_name,varargin)
 % ----------------------------------------------
 %  name    value1/value2/(default)  Description
 % ----------------------------------------------
-% 'phases' | true/(false)            |  Add phases
 % 'channels' | ()   plot all the channels
 % 'LineSpec' | {} cell array with properties
 p=inputParser;
-p.addParameter('phases',false);
-p.addParameter('channels',{},@(x)(iscell(x) || isstring(x) || ischar(x)));
+p.addParameter('Channels',{},@(x)(iscell(x) || isstring(x) || ischar(x)));
 p.addParameter('Shaded',false);
 p.addParameter('Legend',true);
 p.addParameter('LineSpec',[]);
 p.parse(varargin{:});
 
-phases=p.Results.phases;
-channels=p.Results.channels;
+channels=p.Results.Channels;
 lineSpec=p.Results.LineSpec;
 LEGEND=p.Results.Legend;
 washold=ishold();
@@ -103,9 +100,6 @@ end
 
 function h=plot_labels(t,labels,varargin)
 % Plot labels as shaded regions:
-% plot_phases(experiment_data)
-% plot_phases(experiment_data,'lines');
-% plot_phases(experiment_data,'shades');
 
 p=inputParser();
 p.addParameter('Shaded',false);
