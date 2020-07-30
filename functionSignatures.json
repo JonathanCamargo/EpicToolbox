@@ -613,5 +613,24 @@
 				"repeating": false
 			}
 		]
-	}
+	},
+	"FileManager":
+	{
+		"inputs":
+		[
+			{
+				"name": "Root",
+				"kind": "namevalue",
+				"type": "dir",
+				"repeating": false
+			},
+			{
+				"name": "PathStructure",
+				"kind": "namevalue",
+				"type": "cell",
+				"repeating": false
+			}
+		]
+	}	
+	
 }
