@@ -15,16 +15,20 @@ function save_sfpost(EpicToolboxStruct,varargin)
 %                          with subfields per each pathlevel in the file
 %                          manager. This info will be used to create the
 %                          folder paths for sfpost.
+%       'OverWrite'  (true)/false 
+%       'hdf5'       true/(false)  save as hdf5 format to load in python
       
 narginchk(0,6);
 p=inputParser();
 p.addParameter('FileManager',[],@(x)isa(x,'FileManager'));
+p.addParameter('hdf5',false,@islogical);
 p.addParameter('Overwrite',true,@islogical);
 
 p.parse(varargin{:});
 f=p.Results.FileManager;
 
 Overwrite=p.Results.Overwrite;
+isHDF5=p.Results.hdf5;
 
 % List of files to be written to.
 allFiles = {};
@@ -135,7 +139,11 @@ for i=1:numel(EpicToolboxStruct)
         mkdirfile(outfile{1});
         if (Overwrite || ~exist(outfile{1},'file'))
             data=eval(sprintf('EpicToolboxStruct{i}.%s',sensors{j}));
-            save(outfile{1},'data');
+            if ~isHDF5
+           	save(outfile{1},'data');
+	    else
+	    	table2hdf5(data,outfile{1});
+	    end
         end
     end
     
