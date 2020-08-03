@@ -5,7 +5,7 @@ import warnings
 
 class FileManager:
 
-    def __init__(self,Root=None,PathStructure=None,Ext=None,ShowRoot=True,ScopeDict=None):
+    def __init__(self,Root=None,PathStructure=None,Ext=None,ShowRoot=True,ScopeDict=None,verbose=0):
         '''
         Optional arguments
         ----------------------------
@@ -25,6 +25,7 @@ class FileManager:
         self.ext=None
         self.showRoot=True
         self.scopeDict={}
+        self.verbose=verbose
 
         if Root==None:
             self.root=defaultRoot

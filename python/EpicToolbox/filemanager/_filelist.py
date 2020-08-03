@@ -27,7 +27,7 @@ def fileList(self,dictData=None):
     allPaths=[]
     for idx in range(0,len(keyList)):
         a=glob.glob(keyList[idx],recursive=True)
-        allPaths=allPaths+a
+        allPaths=allPaths+a        
 
     if self.showRoot==False:
         for idx in range(0,len(allPaths)):

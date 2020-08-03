@@ -2,7 +2,7 @@ from .topics import Topics
 from .topics import Topics
 import pandas as pd
 
-def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=None):
+def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=None,verbose=0):
     '''% GetData retrieves a table of training and a table of testing data from
     % Input can be either a FileManager instance or a cell array with trials
     % from EpicToolbox.
@@ -32,6 +32,8 @@ def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=No
         s={'Sensor':[xsensors,ysensors]}
         s.update(filemanager_scope)
         allfiles=f.fileList(s)
+        if verbose>0:
+            print("Loading {} files".format(len(allfiles)))
         alltrials=f.EpicToolbox(allfiles,n_jobs=n_jobs)
     
     outtrials_x=list()

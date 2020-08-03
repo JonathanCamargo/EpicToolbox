@@ -4,10 +4,12 @@ import numpy as np
 from joblib import Parallel, delayed
 import os
 
-def loadhdf(hdf5file,dataframe=True):
+def loadhdf(hdf5file,dataframe=True,verbose=0):
     '''Read data stored on hdf5 file data should
     contain a key 'data' and a field 'names' for the header'''
 
+    if verbose>1:
+        print("Loading {}".format(hdf5file))
     with h5py.File(hdf5file, 'r') as f:
         #Read data and names and construct only dataframe
         out_data=f['data'][:]
@@ -35,6 +37,9 @@ def EpicToolbox(self,fileList,n_jobs=1):
     Combine data from different sensors into one struct
     '''
 
+    if self.verbose>0:
+        print("Loading {} files to EpicToolbox".format(len(fileList)))
+
     pathfields=self.folderLevels
     lastfield=self.folderLevels[-1]
 
@@ -61,8 +66,11 @@ def EpicToolbox(self,fileList,n_jobs=1):
 
     trialdata=[None]*len(uniquetrials)
 
-    alldfs=Parallel(n_jobs=n_jobs)(delayed(loadhdf)(file) for file in fileList)
+    alldfs=Parallel(n_jobs=n_jobs)(delayed(loadhdf)(file,verbose=self.verbose) for file in fileList)
     #alldfs=[loadhdf(file) for file in fileList]
+
+    if self.verbose>0:
+        print('Finished loading')
 
     for i,df in enumerate(alldfs):
         if trialdata[uniqueidx[i]] is None:

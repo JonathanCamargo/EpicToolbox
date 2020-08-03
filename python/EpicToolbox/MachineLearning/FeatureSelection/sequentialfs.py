@@ -122,7 +122,7 @@ class SequentialFeatureSelection:
         if remaining:
             features = len(remaining)
             n_jobs = min(self.n_jobs, features)
-            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose)
+            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose, prefer="threads")
             work = parallel(delayed(self._fun)
                             (tuple(set(included) | {feature}))
                             for feature in remaining)
