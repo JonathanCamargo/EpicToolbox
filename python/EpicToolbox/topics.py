@@ -130,7 +130,7 @@ class Topics():
             channels=[['.']]*len(topics)
 
         if not (type(channels) is list):
-            #channel is just string, repeate as many topics we have
+            #channel is just string, repeat as many topics we have
             channels=[[channels]]*len(topics)
         elif not (type(channels[0]) is list):
             #Only one channel and user was lazy to add extra bracket
