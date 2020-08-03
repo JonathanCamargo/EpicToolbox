@@ -24,7 +24,7 @@ def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=No
     if filemanager_scope is None:
         filemanager_scope={}
 
-    if input is dict:
+    if type(input) is list:
         #Trial array
         alltrials=input
     else:

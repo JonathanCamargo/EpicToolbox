@@ -25,7 +25,7 @@ def genList(self,dictData=None):
     Root=self.root
 
     if dictData==None:
-        dictData={}
+        dictData={}    	    	
 
     n=[]
     for i,level in enumerate(folderLevels):
