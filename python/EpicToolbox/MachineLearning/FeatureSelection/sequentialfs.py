@@ -102,6 +102,10 @@ class SequentialFeatureSelection:
         else:
             self.included=[]
 
+    def funHelper(self,iteration,input):
+        out=self._fun(input)
+        return iteration,out
+
 
     def _inclusion(self,included):
         ''' Select one new feature by testing from all the features that have not been
@@ -122,12 +126,22 @@ class SequentialFeatureSelection:
         if remaining:
             features = len(remaining)
             n_jobs = min(self.n_jobs, features)
-            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose, prefer="threads")
-            work = parallel(delayed(self._fun)
-                            (tuple(set(included) | {feature}))
-                            for feature in remaining)
-            allres = np.array(work)
+            parallel = Parallel(n_jobs=n_jobs, verbose=self.verbose)
+            work = parallel(delayed(self._funHelper)
+                            (i,tuple(set(included) | {feature}))
+                            for i,feature in enumerate(remaining))
 
+            import pickle
+            filename='/nv/hp22/jcamargoleyva3/data/mierdalast.pck'
+            filehandler = open(filename, 'wb')
+            pickle.dump(work,filehandler)
+
+            #Sort work from index
+            index=[a[0] for a in work]
+            work=[a[1] for a in work]
+            work=[a for _,a in sorted(zip(index,work))]
+
+            allres = np.array(work)
             featscores=[res[0] for res in work]
             other=[res[1] for res in work]
 
@@ -167,6 +181,13 @@ class SequentialFeatureSelection:
 
             featscores=[res[0] for res in work]
             other=[res[1] for res in work]
+
+            import pickle
+            filename='/home/ossip/scratch/mierdacasera.pck'
+            filehandler = open(filename, 'wb')
+            pickle.dump(work,filehandler)
+
+
 
             # Find the new best feature
             idx = np.argmax(featscores)
