@@ -48,16 +48,20 @@ def multisubject_cv_score(model,scorer,subjectsX,subjectsY,features=None,cv=None
 
     subjectsScores=[]
     subjectsOthers=[]
-
+      
     for i in range(0,len(subjectsX)):
         X=subjectsX[i]
         X=X[:,features]
+        #print("Subject{}".format(i))
+        #print(X)
         Y=subjectsY[i]
         (subjectScore,subjectOther)=cv_score(model,scorer,X,Y,features=None,cv=cv)
         subjectsScores.append(subjectScore)
         subjectsOthers.append(subjectOther)
     other={'WithinSubjectAvgScore':subjectsScores,'WithinSubjectCVScores':subjectsOthers}
-    return (np.mean(subjectsScores),other)
+    meanscore=np.mean(subjectsScores)
+   
+    return (meanscore,other)
 
 
 class SequentialFeatureSelection:
@@ -102,8 +106,9 @@ class SequentialFeatureSelection:
         else:
             self.included=[]
 
-    def funHelper(self,iteration,input):
+    def _funHelper(self,iteration,input):
         out=self._fun(input)
+        #return iteration,input,out
         return iteration,out
 
 
@@ -131,10 +136,10 @@ class SequentialFeatureSelection:
                             (i,tuple(set(included) | {feature}))
                             for i,feature in enumerate(remaining))
 
-            import pickle
-            filename='/nv/hp22/jcamargoleyva3/data/mierdalast.pck'
-            filehandler = open(filename, 'wb')
-            pickle.dump(work,filehandler)
+            #import pickle
+            #filename='/nv/hp22/jcamargoleyva3/data/mierdalast.pck'
+            #filehandler = open(filename, 'wb')
+            #pickle.dump(work,filehandler)
 
             #Sort work from index
             index=[a[0] for a in work]
@@ -182,10 +187,10 @@ class SequentialFeatureSelection:
             featscores=[res[0] for res in work]
             other=[res[1] for res in work]
 
-            import pickle
-            filename='/home/ossip/scratch/mierdacasera.pck'
-            filehandler = open(filename, 'wb')
-            pickle.dump(work,filehandler)
+            #import pickle
+            #filename='/home/ossip/scratch/mierdacasera.pck'
+            #filehandler = open(filename, 'wb')
+            #pickle.dump(work,filehandler)
 
 
 
