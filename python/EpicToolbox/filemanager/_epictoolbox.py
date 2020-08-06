@@ -43,7 +43,7 @@ def EpicToolbox(self,fileList,n_jobs=1):
     pathfields=self.folderLevels
     lastfield=self.folderLevels[-1]
 
-    tolook=[level for level in pathfields[0:-1] if ((level is not 'Sensor') and (level is not 'sensor'))]
+    tolook=[level for level in pathfields[0:-1] if ((level != 'Sensor') and (level != 'sensor'))]
 
     trials=self.getFields(fileList,lastfield)
 
