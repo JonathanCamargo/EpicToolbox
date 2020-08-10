@@ -11,7 +11,7 @@
 % f=FileManager();
 %
 % Using other folder pattern
-% f=FileManager('Root',rootDir,'PathStructure',{'folderLevel1','folderLevel2','folderLevel3'});
+% f=FileManager(rootDir,'PathStructure',{'folderLevel1','folderLevel2','folderLevel3'});
 % This specifies how the data is nested inside folders
 %
 % Get a list of files with fileList
@@ -34,32 +34,30 @@ classdef FileManager
     end
     
     methods
-        function obj=FileManager(varargin)
+        function obj=FileManager(root,varargin)
             % Class for convenient handling of files in structured directory with
             % repetitive patterns.
+            % FileManager(root)
             % 
             % FileManager(varargin)
             % ----------------------------------------------
             %  name    value1/value2/(default)  Description
-            % ----------------------------------------------
-            % 'Root'                | ('RawMatlab')                 | Root of the data  
+            % ----------------------------------------------                        
             % 'PathStructure'       |
             % ({'Ambulation','Sensor','Subject','Date','Trial'})    | Structure of how files are saved
             % 'ShowRoot'            | (false)                       | Treat the files as absolute path by always prepending the root
             % 'FullFileList'        | ({})                          | An internal representation of all the files to eliminate the amount of disk readings.
             narginchk(0,6);
             %Default constructor (empty)
-            defaultRootDir='RawMatlab';
+            
             defaultPathStructure={'File'};
             p=inputParser();
-            p.addParameter('Root',defaultRootDir,@(x)isValidRootDir(x));
+            p.addRequired('Root',@(x)isValidRootDir(x));
             p.addParameter('PathStructure',defaultPathStructure,@isValidPathStructure);
             p.addParameter('ShowRoot',true,@islogical);
-            p.addParameter('FullFileList',{},@iscell);
+            p.addParameter('FullFileList',{},@iscell);                        
             
-            
-            
-            p.parse(varargin{:});
+            p.parse(root,varargin{:});
             
             rootDir=p.Results.Root;
             if rootDir(end)==filesep

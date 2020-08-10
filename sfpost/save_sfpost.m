@@ -17,18 +17,23 @@ function save_sfpost(EpicToolboxStruct,varargin)
 %                          folder paths for sfpost.
 %       'OverWrite'  (true)/false 
 %       'hdf5'       true/(false)  save as hdf5 format to load in python
+%       'SplitTopics' true/(false) For topics that share the same branch
+%                                  save in different sensor folders instead
+%                                  of a struct.
       
 narginchk(0,6);
 p=inputParser();
 p.addParameter('FileManager',[],@(x)isa(x,'FileManager'));
 p.addParameter('hdf5',false,@islogical);
 p.addParameter('Overwrite',true,@islogical);
+p.addParameter('SplitTopics',false,@islogical);
 
 p.parse(varargin{:});
 f=p.Results.FileManager;
 
 Overwrite=p.Results.Overwrite;
 isHDF5=p.Results.hdf5;
+SplitTopics=p.Results.SplitTopics;
 
 % List of files to be written to.
 allFiles = {};
@@ -129,7 +134,7 @@ for i=1:numel(EpicToolboxStruct)
 	arguments(2:2:end)=trialFieldsTbl{i,:};
     
     % Save files for topics with tables
-    sensors=Topics.topics(EpicToolboxStruct{i});
+    sensors=Topics.topics(EpicToolboxStruct{i},'Recursive',SplitTopics);            
     for j=1:numel(sensors)
         outfile=f.genList(arguments{:},sensorlevel,sensors{j});
         [~,~,ext]=fileparts(outfile{1});
@@ -140,15 +145,16 @@ for i=1:numel(EpicToolboxStruct)
         if (Overwrite || ~exist(outfile{1},'file'))
             data=eval(sprintf('EpicToolboxStruct{i}.%s',sensors{j}));
             if ~isHDF5
-           	save(outfile{1},'data');
-	    else
-	    	table2hdf5(data,outfile{1});
-	    end
+                save(outfile{1},'data');    
+            else
+            	table2hdf5(data,outfile{1});
+            end
         end
     end
     
     % Save files for other topics
-    allsensors=Topics.topics(rmfield(EpicToolboxStruct{i},'info'),'Header',false);
+    allsensors=Topics.topics(rmfield(EpicToolboxStruct{i},'info'),...
+        'Header',false,'Recursive',SplitTopics);
     othersensors=setdiff(allsensors,sensors); 
     for j=1:numel(othersensors)
         othersensor=othersensors{j};

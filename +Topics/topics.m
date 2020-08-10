@@ -3,13 +3,16 @@ function alltopics=topics(trial_data,varargin)
 %
 %
 % 'Header' (true)/false  only find topics that have a header
+% 'Recursive' (true)/false navigate recursively inside fields to find
+%                          topics.
 
 p=inputParser();
 p.addParameter('Header',true,@islogical);
+p.addParameter('Recursive',true,@islogical);
 p.parse(varargin{:});
 
 hasHeader=p.Results.Header;
-
+isRecursive=p.Results.Recursive;
 
 
 if ~isstruct(trial_data)
@@ -18,24 +21,23 @@ if ~isstruct(trial_data)
     end
 end
 
-alltopics=topics_recursive(trial_data,{});
+alltopics=topics_recursive(trial_data,{},isRecursive);
 
 
-function alltopics=topics_recursive(trial_data,parent)
-
+function alltopics=topics_recursive(trial_data,parent,isRecursive)  
 alltopics={};
-if isstruct(trial_data)
+if isstruct(trial_data) && (isempty(parent) || isRecursive)
 	fnames=fieldnames(trial_data);
-	for i=1:numel(fnames)
-		theseTopics=topics_recursive(trial_data.(fnames{i}),fnames{i});
-		for j=1:numel(theseTopics)
+    for i=1:numel(fnames)        
+        theseTopics=topics_recursive(trial_data.(fnames{i}),fnames{i},isRecursive);                
+        for j=1:numel(theseTopics)
             if ~isempty(parent)
                 alltopics=[alltopics,{strjoin({parent,theseTopics{j}},'.')}];
             else
                 alltopics=[alltopics,theseTopics(j)];                
             end
-		end
-	end
+        end    
+    end
 elseif istable(trial_data)
     if otherValidations(trial_data,hasHeader)
         alltopics={parent};	
