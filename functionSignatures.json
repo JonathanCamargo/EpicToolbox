@@ -620,7 +620,7 @@
 		[
 			{
 				"name": "Root",
-				"kind": "namevalue",
+				"kind": "required",
 				"type": "dir",
 				"repeating": false
 			},
@@ -631,6 +631,23 @@
 				"repeating": false
 			}
 		]
+	},
+	"FileManager.fileList":
+	{
+		"inputs":
+		[
+			{			
+				"name": "obj",
+				"kind": "required",
+				"type": "FileManager",
+				"repeating": false
+			},
+			{
+				"name": "field",
+				"kind": "optional",
+				"type": "choices=obj.folderLevels",
+				"repeating": true			
+			}
+		]
 	}	
-	
 }

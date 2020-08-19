@@ -70,40 +70,43 @@ for i=1:size(trial_data,1)
         selected=struct();
         for msg_idx=1:length(topics_list)
             try
-                msg_table=eval(sprintf('data.%s',topics_list{msg_idx}));
+                %msg_table=eval(sprintf('data.%s',topics_list{msg_idx}));
+                a=strsplit(topics_list{msg_idx},'.');
+                msg_table=getfield(data,a{:});                                
             catch
                 warning('%s does not exist, skipping',topics_list{msg_idx}');
                 continue
             end
             if istable(msg_table)
                 channels=msg_table.Properties.VariableNames;
-                %Channels for this topic is empty -> normalize all channels and header
+                %Channels for this topic is empty -> select all channels and header
                 if isempty(channel_list{msg_idx}) || any(strcmp(channel_list{msg_idx},'*'))
                        channel_list{msg_idx}=channels;
+                       selectedChannelsInd=1:numel(channels);
+                else
+                    % Old version using ismember requires exact string for channel
+                    % [isSelected,selectedChannelsInd]=ismember(channel_list{msg_idx},msg_table.Properties.VariableNames);
+                    % selectedChannelsInd=sort(selectedChannelsInd(isSelected));        
+                    % Use regexp to allow easy selection of channels with a pattern                
+                    keys=channel_list{msg_idx};
+                    isSelected=false(size(keys));
+                    selectedChannelsInd=[];
+                    for keyIdx=1:numel(keys)
+                        key=keys{keyIdx};
+                        switch Search
+                            case 'regexp'
+                                foundcell=regexp(msg_table.Properties.VariableNames,key);
+                                found=cellfun(@(x)(~isempty(x)),foundcell);
+                            case 'contains'
+                                found=contains(msg_table.Properties.VariableNames,key);
+                            case 'strcmp'
+                                found=strcmp(msg_table.Properties.VariableNames,key);
+                        end                                        
+                        isSelected(keyIdx)=any(found);                    
+                        selectedChannelsInd=[selectedChannelsInd find(found)];
+                    end
+                    selectedChannelsInd=unique(selectedChannelsInd,'stable');
                 end
-                % Old version using ismember requires exact string for channel
-                % [isSelected,selectedChannelsInd]=ismember(channel_list{msg_idx},msg_table.Properties.VariableNames);
-                % selectedChannelsInd=sort(selectedChannelsInd(isSelected));        
-                % Use regexp to allow easy selection of channels with a pattern                
-                keys=channel_list{msg_idx};
-                isSelected=false(size(keys));
-                selectedChannelsInd=[];
-                for keyIdx=1:numel(keys)
-                    key=keys{keyIdx};
-                    switch Search
-                        case 'regexp'
-                            foundcell=regexp(msg_table.Properties.VariableNames,key);
-                            found=cellfun(@(x)(~isempty(x)),foundcell);
-                        case 'contains'
-                            found=contains(msg_table.Properties.VariableNames,key);
-                        case 'strcmp'
-                            found=strcmp(msg_table.Properties.VariableNames,key);
-                    end                                        
-                    isSelected(keyIdx)=any(found);                    
-                    selectedChannelsInd=[selectedChannelsInd find(found)];
-                end
-                selectedChannelsInd=unique(selectedChannelsInd,'stable');
-    
                 
 
                 msg_table=msg_table(:,selectedChannelsInd);              

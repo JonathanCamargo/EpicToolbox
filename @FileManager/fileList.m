@@ -37,7 +37,8 @@ else
     filesep_='/';
 end
 
-keyList=obj.genList(varargin{:});
+fieldlist=varargin;
+keyList=obj.genList(fieldlist{:});
 
 list=[];
 

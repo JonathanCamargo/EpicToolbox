@@ -121,8 +121,15 @@ classdef FileManager
             
             folderLevel=varargin;            
             
+            if isempty(folderLevel)
+                folderLevel=obj.folderLevels;
+                structOutput=true;
+            else
+                structOutput=false;
+            end
+            
             if isempty(fileList)
-                error('filesList is empty provided');
+                error('empty fileList provided');
             end
             % Divide the cell arrays by file separator
             a=split(fileList,filesep);
@@ -143,11 +150,16 @@ classdef FileManager
             end
             
             field=a(:,(ncols-nlevels)+pos);
-            
+                        
             varargout=cell(numel(pos),1);
             for i=1:numel(pos)
                 varargout{i}=field(:,i);
             end
+            
+            if structOutput
+               varargout={cell2struct(varargout,obj.folderLevels)};
+            end
+            
             
             
         end
