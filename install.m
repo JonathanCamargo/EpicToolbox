@@ -6,6 +6,7 @@ fprintf('Installing EPICTOOLBOX...\n');
 %% Add the paths as needed
 addpath(genpath('lib'));
 addpath(genpath('Normalization'));
+addpath(genpath('Devices'));
 addpath(genpath('Filtering'));
 addpath(genpath('Resampling'));
 addpath(genpath('Segmentation'));
