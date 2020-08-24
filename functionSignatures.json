@@ -302,7 +302,7 @@
 			{
 				"name": "topic_name",
 				"kind": "required",
-				"type": "choices=fieldnames(experiment_data)",
+				"type": "choices=Topics.topics(experiment_data)",
 				"repeating": false
 			},
 			{
