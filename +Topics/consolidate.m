@@ -22,7 +22,7 @@ validStrOrCell=@(x) iscell(x) || ischar(x);
 p=inputParser;
 p.addOptional('Topics',{},validStrOrCell);
 p.addParameter('ShortNames',false,@islogical);
-p.addParameter('Prepend',false,@islogical); 
+p.addParameter('Prepend',true,@islogical); 
 p.parse(varargin{:});
 
 % Get the optional results:
@@ -103,7 +103,7 @@ end
 if useShortNames
     featureTable=array2table(featureTableTmp,'VariableNames',shortnames);
 elseif ~(length(unique(longnames))==length(longnames))    
-    error('Can not use long names, names are is repeated');
+    error('Can not use long names, names are repeated');
 else 
     featureTable=array2table(featureTableTmp,'VariableNames',longnames);
 end
