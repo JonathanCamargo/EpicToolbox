@@ -18,7 +18,7 @@ class FileManager:
         'ShowRoot': include the root path when generating results
         '''
         defaultRoot='RawMatlab'
-        defaultPathStructure=['Ambulation','Sensor','Subject','Date','Trial']
+        defaultPathStructure=['File']
 
         self.folderLevels=None
         self.root=None
