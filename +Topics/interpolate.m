@@ -8,32 +8,41 @@ function resampled=interpolate(trial_data,T,varargin)
 %   e.g interpolatedTrial=interpolate(trial_data,0:0.1:10,sometopics)
 %   will interpolate from Header 0 to 10 equally spaced 0.1dt.
 %
+% Optional:
+% 'Extrapolation': (false)/true, flase with fill extrapolated values with nan. if true will extrapolate 
 % See also Topics
 
 % Check if the data is a the topic or all the trial data
+p=inputParser();
+p.addOptional('Topics',{});
+p.addParameter('Extrapolation',false);
+p.parse(varargin{:});
 
-% Get message list
-if nargin==3
-    topics_list=varargin{1};
-    if ischar(topics_list)
-        topics_list={topics_list};
-    end
+Extrapolation=p.Results.Extrapolation;
+if Extrapolation
+    Extrapolation='extrap';
 else
-    topics_list=Topics.topics(trial_data);
+    Extrapolation=NaN;
 end
 
-fun=@(table_data)interpolate_table(table_data,T);
+% Get message list
+topics_list=p.Results.Topics;
+if isempty(topics_list)
+    topics_list=Topics.topics(trial_data);    
+end
+
+fun=@(table_data)interpolate_table(table_data,T,Extrapolation);
 resampled=Topics.processTopics(fun,trial_data,topics_list);
 end
 
-function interpolated_table=interpolate_table(table_data,T)
+function interpolated_table=interpolate_table(table_data,T,Extrapolation)
     % Interpolate the data in a table using a spline
     % if data is not numeric it will be repeated till a new value exists.
     if ~iscolumn(T);T=T';end    
     tx=table_data.Header;
     try
         x=table_data{:,2:end};    
-        xinterp=interp1(tx,x,T,'linear','extrap');
+        xinterp=interp1(tx,x,T,'linear',Extrapolation);
         interpolated_table=array2table([T xinterp]);
         interpolated_table.Properties=table_data.Properties;
     catch

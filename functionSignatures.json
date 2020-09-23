@@ -314,7 +314,7 @@
 			{
 				"name": "channels",
 				"kind": "namevalue",
-				"type": "choices=fieldnames(experiment_data.(topic_name))",
+				"type": "choices=Topics.channels(experiment_data,topic_name)",
 				"repeating": false
 			}
 		]
