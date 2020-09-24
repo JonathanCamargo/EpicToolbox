@@ -1,5 +1,9 @@
 import os
 
 def mkdirfile(outfile):
-    outfolder,_=os.path.split(outfile)
-    os.makedirs(outfolder,exist_ok=True)
+    outfolder,outextension=os.path.splitext(outfile)
+    if outextension=='':
+        os.makedirs(outfolder,exist_ok=True)
+    else:
+        outfolder=os.path.split(outfolder)
+        os.makedirs(outfolder,exist_ok=True)
