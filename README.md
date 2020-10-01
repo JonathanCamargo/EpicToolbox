@@ -11,7 +11,7 @@ we call topics to the fields in the structure that define different time series 
 Use different functions in +Topics package to manipulate the information in a trial by doing different
 operations to specific topics. These functions make the base of the code and all extra functionality should rely on this package.
 
-### Installation###
+### Installation
 * Requires:
 * Matlab
 * rosgenmsg
