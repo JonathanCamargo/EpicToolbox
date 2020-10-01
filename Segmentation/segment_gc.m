@@ -29,6 +29,8 @@ if ismember('info.Trial',allTopics)
     segmentNames=compose([strrep(trial_data.info.Trial,'.mat','') '_%02d'],1:numel(segments));
     for i=1:numel(segments)
        segments{i}.info.Trial=segmentNames{i};
+       segments{i}.conditions.startTime=intervals{i}(1);
+       segments{i}.conditions.endTime=intervals{i}(2);
     end
 end
 end

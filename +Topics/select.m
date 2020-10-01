@@ -5,7 +5,7 @@ function trial_data=select(trial_data,varargin)
 % 
 % Parameters:
 % 'Channels' : a list of channels to select
-% 'Search' :  ('regexp'), 'contains', 'strcmp' how to look for channels 
+% 'Search' :  'regexp', 'contains', ('strcmp') how to look for channels 
 % Regular usage:
 % trial_data is a data structure containing topics
 % or a cell array containing trial data structures
@@ -45,7 +45,7 @@ end
 
 Search=p.Results.Search;
 if isempty(p.Results.Search)
-    Search='regexp';
+    Search='strcmp';
 elseif ~any(ismember(Search,{'contains','regexp','strcmp'}))
     error('Search method not supported');
 end
