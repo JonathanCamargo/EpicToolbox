@@ -1,3 +1,4 @@
+import os
 def modFileList(self,fileList,dictData=None):
     '''
     % Modify a file list to replace specific entries

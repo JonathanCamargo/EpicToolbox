@@ -5,5 +5,5 @@ def mkdirfile(outfile):
     if outextension=='':
         os.makedirs(outfolder,exist_ok=True)
     else:
-        outfolder=os.path.split(outfolder)
+        outfolder,_=os.path.split(outfolder)
         os.makedirs(outfolder,exist_ok=True)
