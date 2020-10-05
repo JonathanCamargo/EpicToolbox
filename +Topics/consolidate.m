@@ -87,7 +87,8 @@ for i=1:numel(topics_list)
     shortnames=[shortnames ;names'];
     longnames=[longnames ;x_header'];
     %featureTable=[featureTable table2cell(x(:,:))];
-    featureTable=[featureTable x.Variables]; 
+    x.Properties.VariableNames=names';
+    featureTable=[featureTable x]; 
     %
     N=N+n;
 end
@@ -95,17 +96,13 @@ longnames=strrep(longnames,'.','_');
 featureNames=[shortnames longnames];
 
 featureNames=array2table(featureNames,'VariableNames',{'ShortName','LongName'});
-if isnumeric(featureTable{1})
-    featureTableTmp=[featureTable{:}];
-else
-    featureTableTmp=featureTable;
-end
+
 if useShortNames
-    featureTable=array2table(featureTableTmp,'VariableNames',shortnames);
+    featureTable.Properties.VariableNames=shortnames;
 elseif ~(length(unique(longnames))==length(longnames))    
     error('Can not use long names, names are repeated');
 else 
-    featureTable=array2table(featureTableTmp,'VariableNames',longnames);
+    featureTable.Properties.VariableNames=longnames;
 end
 consolidate=featureTable;
 names=featureNames;
