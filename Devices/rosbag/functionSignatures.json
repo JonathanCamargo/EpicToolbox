@@ -1,0 +1,11 @@
+{
+
+	"rosbagread":
+	{
+		"inputs":
+		[
+				{"name":"osimModelFile","kind":"required","type":"file=*.bag"}
+		]
+	}
+	
+}

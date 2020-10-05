@@ -1,4 +1,5 @@
 {
+
 	"Topics.average":
 	{
 		"inputs":
@@ -367,24 +368,6 @@
 			}
 		]
 	},
-	"Topics.processTrials":
-	{
-		"inputs":
-		[
-			{
-				"name": "fun",
-				"kind": "required",
-				"type": "@(~)true",
-				"repeating": false
-			},
-			{
-				"name": "trials_array",
-				"kind": "required",
-				"type": "@(~)true",
-				"repeating": false
-			}
-		]
-	},
 	"Topics.promote":
 	{
 		"inputs":
@@ -644,7 +627,7 @@
 			},
 			{
 				"name": "field",
-				"kind": "optional",
+				"kind": "ordered",
 				"type": "choices=obj.folderLevels",
 				"repeating": true			
 			}
