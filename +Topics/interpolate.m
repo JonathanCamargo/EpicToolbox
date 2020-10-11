@@ -14,7 +14,7 @@ function resampled=interpolate(trial_data,T,varargin)
 
 % Check if the data is a the topic or all the trial data
 p=inputParser();
-p.addOptional('Topics',{});
+p.addOptional('Topics',{},@(x)(ischar(x) || iscell(x)));
 p.addParameter('Extrapolation',false);
 p.parse(varargin{:});
 

@@ -20,6 +20,7 @@ lineSpec=p.Results.LineSpec;
 LEGEND=p.Results.Legend;
 washold=ishold();
 
+
 if ~iscell(channels)
     channels={channels};
 end

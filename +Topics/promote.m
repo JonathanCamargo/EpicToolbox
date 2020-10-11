@@ -26,12 +26,13 @@ p.parse(varargin{:});
 % Get message list
 % List of messages to process:
 if isempty(p.Results.Topics)
-    topics_list=Topics.defaults.fields;
+    topics_list=Topics.topics(trial_data,'Header',false);
 elseif ischar(p.Results.Topics)
     topics_list={p.Results.Topics};
 else
     topics_list=p.Results.Topics;
 end
+
 Prepend=p.Results.Prepend;
 
 %% Check if trial_data is a cell array

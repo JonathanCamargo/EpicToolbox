@@ -13,7 +13,7 @@ folderLevels=obj.folderLevels;
 
 p=inputParser;
 % Validations
-validStrOrCell=@(x) iscell(x) || ischar(x);
+validStrOrCell=@(x) isstruct(x) || iscell(x) || ischar(x);
 % Adding Parameter varagin
 for i=1:(numel(folderLevels))
     p.addParameter(folderLevels{i},{'*'},validStrOrCell);
@@ -38,6 +38,7 @@ else
 end
 
 fieldlist=varargin;
+
 keyList=obj.genList(fieldlist{:});
 
 list=[];

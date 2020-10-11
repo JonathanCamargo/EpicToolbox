@@ -25,8 +25,17 @@ allTopics=Topics.topics(trial_data,'Header',false);
 segments=Topics.segment(trial_data,intervals,headerTopics);
 
 %% Using info.Trial to modify names for the trials when exists
-if ismember('info.Trial',allTopics)
+if ismember('info.Trial',allTopics)    
     segmentNames=compose([strrep(trial_data.info.Trial,'.mat','') '_%02d'],1:numel(segments));
+    addStartAndEndTimes=true;
+elseif ismember('info.File',allTopics)    
+    segmentNames=compose([strrep(trial_data.info.File,'.mat','') '_%02d'],1:numel(segments));
+    addStartAndEndTimes=true;
+else
+    addStartAndEndTimes=false;
+end
+
+if addStartAndEndTimes
     for i=1:numel(segments)
        segments{i}.info.Trial=segmentNames{i};
        segments{i}.conditions.startTime=intervals{i}(1);
