@@ -84,7 +84,7 @@ for j=1:numel(channels)
     hold on;    
 end
 if (LEGEND)
-    lgnd=legend(findobj(gca, '-regexp', 'DisplayName', '[^'']'),'Location', 'bestoutside');   
+    lgnd=legend(findobj(gca, '-regexp', 'DisplayName', '[^'']'),'Location', 'best');   
 end
 
 title(topic_name,'interpreter', 'none');
