@@ -43,7 +43,11 @@ def modFileList(self,fileList,dictData=None):
         newfileList[i]=a
 
     if 'Root' in dictData:
-        raise('To do')
+        for i in range(0,len(newfileList)):
+            a=newfileList[i]            
+            a=a.replace(self.root,dictData['Root'])
+            newfileList[i]=a        
+        
 
     if 'ext' in dictData:
         for i in range(0,len(newfileList)):

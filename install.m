@@ -11,6 +11,7 @@ addpath(genpath('Filtering'));
 addpath(genpath('Resampling'));
 addpath(genpath('Segmentation'));
 addpath(genpath('Averaging'));
+addpath('MachineLearning');
 addpath(genpath('Power'));
 addpath(genpath('extlib'));
 addpath(genpath('sfpost'));
