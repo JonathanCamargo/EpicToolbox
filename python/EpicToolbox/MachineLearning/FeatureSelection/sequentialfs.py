@@ -20,6 +20,7 @@ def cv_score(model,scorer,X,Y,features=None,cv=None):
     if features is None:
         features=np.arange(0,X.shape[1])
     X=X[:,features]
+
     if cv is None:
         modeli = clone(model)
         modeli.fit(X,Y)
@@ -48,19 +49,17 @@ def multisubject_cv_score(model,scorer,subjectsX,subjectsY,features=None,cv=None
 
     subjectsScores=[]
     subjectsOthers=[]
-      
+
     for i in range(0,len(subjectsX)):
         X=subjectsX[i]
         X=X[:,features]
-        #print("Subject{}".format(i))
-        #print(X)
         Y=subjectsY[i]
-        (subjectScore,subjectOther)=cv_score(model,scorer,X,Y,features=None,cv=cv)
+        (subjectScore,subjectOther)=cv_score(model,scorer,X,Y,features=None,cv=cv)        
         subjectsScores.append(subjectScore)
         subjectsOthers.append(subjectOther)
     other={'WithinSubjectAvgScore':subjectsScores,'WithinSubjectCVScores':subjectsOthers}
     meanscore=np.mean(subjectsScores)
-   
+
     return (meanscore,other)
 
 

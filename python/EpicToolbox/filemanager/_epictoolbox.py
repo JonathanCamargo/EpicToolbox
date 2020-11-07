@@ -59,15 +59,13 @@ def EpicToolbox(self,fileList,n_jobs=1):
             individualtrialstbl=pd.concat([individualtrialstbl,vals],axis=1)
 
     individualtrialstbl=pd.concat([individualtrialstbl,pd.Series(trials,name=lastfield)],axis=1)
-    #individualtrialstbl.drop_duplicates()
-
+    
     combined=individualtrialstbl.apply(lambda x: os.path.sep.join(x), axis=1)
-    uniquetrials,uniqueidx=np.unique(combined,return_inverse=True)
+    uniquetrials,idx,uniqueidx=np.unique(combined,return_index=True,return_inverse=True)
 
     trialdata=[None]*len(uniquetrials)
 
     alldfs=Parallel(n_jobs=n_jobs)(delayed(loadhdf)(file,verbose=self.verbose) for file in fileList)
-    #alldfs=[loadhdf(file) for file in fileList]
 
     if self.verbose>0:
         print('Finished loading')
@@ -76,6 +74,6 @@ def EpicToolbox(self,fileList,n_jobs=1):
         if trialdata[uniqueidx[i]] is None:
             trialdata[uniqueidx[i]]=dict()
         trialdata[uniqueidx[i]][sensors[i]]=df.copy()
-        trialdata[uniqueidx[i]]['info']=individualtrialstbl.loc[uniqueidx[i],:].copy()
+        trialdata[uniqueidx[i]]['info']=individualtrialstbl.loc[idx[uniqueidx[i]],:].copy()
 
     return trialdata

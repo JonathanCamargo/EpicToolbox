@@ -2,19 +2,24 @@ from .topics import Topics
 from .topics import Topics
 import pandas as pd
 
-def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=None,verbose=0):
+def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=None,verbose=0,search='fullmatch'):
     '''% GetData retrieves a table of training and a table of testing data from
     % Input can be either a FileManager instance or a cell array with trials
-    % from EpicToolbox.
+    % from EpicToolbox. The FileManager must have a 'Sensor' level in the path structure.
     %
-    % [traindata,testdata]=GetData(input,x_options,y_options,varargin)
+    % (traindata,testdata)=GetData(input,x_options,y_options,varargin)
     %
-    % 'Mode'   (RandomHold) % Randomize the trials and hold a subset for test
-    %          (Ordered)    % Keep the same order of the input
-    % 'Hold'   (5)      % %of How many trials to reserve from the total
-    % 'Combine' (true)  % return the data as a single table or as a cell array by trials
     %
     % Returns traindata, testdata and info of the source of data
+    % 
+    % Use x_options as a dictionary with keys as sensor names and contents being the channels to be selected.
+    % 
+    % e.g. x_options={'imu':['Accel_x','Accel_y']}
+    % 
+    % Use search input to define how you want to look up for the channels 'fullmatch' | 'contains'
+    % e.g. x_options={'imu':None,'emg':['medialis']} and search='contains' will get all the imu channels and all the
+    % medialis emg channels.
+    % 
     '''
 
     xsensors=list(x_options.keys())
@@ -29,7 +34,7 @@ def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=No
         alltrials=input
     else:
         f=input;
-        s={'Sensor':[xsensors,ysensors]}
+        s={'Sensor':xsensors+ysensors}
         s.update(filemanager_scope)
         allfiles=f.fileList(s)
         if verbose>0:

@@ -122,17 +122,19 @@ class Topics():
         return minHeader
 
     @staticmethod
-    def select(trialdata,topics=None,channels=None):
-        ''' Select some specific and channels topics from the trial'''
+    def select(trialdata,topics=None,channels=None,search='fullmatch'):
+        ''' Select some specific and channels topics from the trial
+	    search :  'contains', ('fullmatch') how to look for channels         
+        '''
         topics = Topics.chooseTopics(topics)
 
-        if channels is None:
-            channels=[['.']]*len(topics)
+        if channels==None:
+            channels=[None]*len(topics)
 
         if not (type(channels) is list):
             #channel is just string, repeat as many topics we have
             channels=[[channels]]*len(topics)
-        elif not (type(channels[0]) is list):
+        elif (not (type(channels[0]) is list)) and (channels[0]!=None):
             #Only one channel and user was lazy to add extra bracket
             channels=[channels]*len(topics)
 
@@ -145,9 +147,17 @@ class Topics():
                 #Get the channels for that topic
                 thisChannels=trialdata[topic].columns
                 boolSelector=pd.Series([False]*len(thisChannels))
-                for channel in topicchannels:
-                    boolSelector=boolSelector | thisChannels.str.contains(pat=channel)
-
+                if topicchannels!=None:
+                    for channel in topicchannels:
+                        if search=='contains':
+                            boolSelector=boolSelector | thisChannels.str.contains(pat=channel)
+                        elif search=='fullmatch':
+                            boolSelector=boolSelector | thisChannels.str.fullmatch(pat=channel)
+                        elif search=='match':
+                            boolSelector=boolSelector | thisChannels.str.match(pat=channel)
+                else:
+                    boolSelector=pd.Series([True]*len(thisChannels))
+                    
                 selectedColumns=trialdata[topic].columns[boolSelector]
                 z[topic]=trialdata[topic][selectedColumns]
         return z
