@@ -33,8 +33,9 @@ def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=No
         #Trial array
         alltrials=input
     else:
-        f=input;
-        s={'Sensor':xsensors+ysensors}
+        f=input;        
+        s=f.scopeDict.copy()
+        s.update({'Sensor':xsensors+ysensors})
         s.update(filemanager_scope)
         allfiles=f.fileList(s)
         if verbose>0:
