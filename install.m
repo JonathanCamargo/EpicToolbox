@@ -10,6 +10,7 @@ addpath(genpath('Devices'));
 addpath(genpath('Filtering'));
 addpath(genpath('Resampling'));
 addpath(genpath('Segmentation'));
+addpath(genpath('MachineLearning'));
 addpath(genpath('Averaging'));
 addpath('MachineLearning');
 addpath(genpath('Power'));

@@ -13,14 +13,16 @@ function extractors=ExtractFeatures(filemanager,extractorStruct,varargin)
   p.addParameter('Window',200);
   p.addParameter('Increment',50);
   p.addParameter('Parallel',false);  
+  p.addParameter('OverWrite',true);  
   p.addParameter('OutPath',''); % Out path (where to save features)
   p.addParameter('FileManagerOpts',{}); %Aditional options for file manager
   p.parse(varargin{:});
   
-  WINDOW=p.Results.Window;
+  WINDOW=p.Results.Window;  
   INCREMENT=p.Results.Increment;
   Mode=p.Results.Mode;
   OutPath=p.Results.OutPath;
+  OverWrite=p.Results.OverWrite;
   FileManagerOpts=p.Results.FileManagerOpts;
   
   isParallel=p.Results.Parallel;
@@ -71,7 +73,7 @@ for sensorIdx=1:numel(sensors)
     otherwise
     end
       
-    loadRunSave(fun,sensorFiles,'OutputPath',featureFiles,'Parallel',isParallel);
+    loadRunSave(fun,sensorFiles,'OutputPath',featureFiles,'Parallel',isParallel,'OverWrite',OverWrite);
 end
 
    extractors=e;
