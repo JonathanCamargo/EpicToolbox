@@ -1,6 +1,6 @@
 function [h,lgnd]=plot(experiment_data,topic_name,varargin)
 % Plot an specific topic
-% use: Topics.plot(experiment_data,topic_name,optional::options);
+% use: [h,lgnd]=Topics.plot(experiment_data,topic_name,optional::options);
 % 
 % Options: name value pairs
 % ----------------------------------------------

@@ -41,6 +41,9 @@ else
         for msg_idx=1:length(topics_list)
             try                
                 first_time=eval(sprintf('first_times.%s',topics_list{msg_idx}));
+                if ~isnumeric(first_time)
+                    error('First time not numeric');
+                end
             catch
                 continue
             end
