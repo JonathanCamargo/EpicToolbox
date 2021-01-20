@@ -16,35 +16,22 @@ if nargin==2
     % List of messages to process:
     messages_list=varargin{1};
 elseif nargin==1
-    messages_list=Topics.fields;
+    messages_list=Topics.topics(trial_data);
 else
     error('Wrong number of arguments please check documentation');
 end
 
 % Get the number of cycles within a bag file
 % i.e. count blocks EarlyStance-EarlyStance in the fsm.State
-states=[trial_data.fsm.State.State{:}]';
+states=[trial_data.fsm.State.State];
 times=trial_data.fsm.State.Header;
-index=find(strcmp(states,'EarlyStance'))';
+index=find(strcmp(states,'LW_EarlyStance'))';
 % index=find(contains(states,'EarlyStance'))';
 earlyStanceTimes=times(index);
 
-cycles={};
-for i=1:(length(earlyStanceTimes)-1)
-    extracted=struct('mat_file',trial_data.trial,'start_time',earlyStanceTimes(i));
-    extracted=setfield(extracted,'end_time',earlyStanceTimes(i+1));    
-    for j=1:length(messages_list)        
-        msg_table=eval(sprintf('trial_data.%s',messages_list{j}));
-        out=cut(msg_table,earlyStanceTimes(i),earlyStanceTimes(i+1));
-        
-        out.Header=out.Header-earlyStanceTimes(i);
-        fields=strsplit(messages_list{j},'.');
-        extracted=setfield(extracted,fields{:},out);        
-    end
-    cycles{i}=extracted;
-end
+intervals=[earlyStanceTimes(1:end-1) earlyStanceTimes(2:end)];
+intervals=mat2cell(intervals,ones(size(intervals,1),1),[2]);
 
-segmented=cycles;
-
+segmented =Topics.segment(trial_data,intervals,messages_list);
 end
 

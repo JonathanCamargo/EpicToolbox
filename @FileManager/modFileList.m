@@ -29,6 +29,7 @@ p.addParameter('Root',{},validStrOrCell);
 p.addParameter('Ext',{},validStrOrCell);
 p.parse(varargin{:});
 
+assert(~isempty(fileList),'Empty file list provided');
 a=split(fileList,filesep);
 if size(a,2)==1
     a=a';

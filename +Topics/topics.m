@@ -54,7 +54,7 @@ end
 
 function out=otherValidations(trial,hasHeader)
     out=false;
-    if ~hasHeader || (hasHeader && ismember('Header',trial.Properties.VariableNames))
+    if ~hasHeader || (hasHeader && ismember('Header',trial.Properties.VariableNames)) && (~isempty(trial))
         out=true;    
     end
 end

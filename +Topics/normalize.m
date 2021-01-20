@@ -143,13 +143,14 @@ else
         [isSelected,selectedChannelsInd]=ismember(channel_list{msg_idx},table_data.Properties.VariableNames);
         selectedChannelsInd=sort(selectedChannelsInd(isSelected));        
         
-        b=(max_values.(topics_list{msg_idx}));        
+        topic=strsplit((topics_list{msg_idx}),'.');
+        b=getfield(max_values,topic{:});        
         maxVals{1,selectedChannelsInd}=b{1,selectedChannelsInd};
-        max_values.(topics_list{msg_idx})=maxVals;
-        
-        b=(min_values.(topics_list{msg_idx}));
+        max_values=setfield(max_values,topic{:},maxVals);
+                
+        b=getfield(min_values,topic{:});        
         minVals{1,selectedChannelsInd}=b{1,selectedChannelsInd};                      
-        min_values.(topics_list{msg_idx})=minVals;
+        min_values=setfield(min_values,topic{:},minVals);
         
         table_data=normalize_table(table_data,maxVals.Variables,minVals.Variables);
         
