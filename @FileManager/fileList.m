@@ -19,10 +19,12 @@ for i=1:(numel(folderLevels))
     p.addParameter(folderLevels{i},{'*'},validStrOrCell);
 end 
 p.addParameter('Root',obj.root)
+p.addOptional('fileList_numFiles',nan,@isnumeric);
 
 p.parse(varargin{:});
 
 Root = p.Results.Root;
+Numfiles=p.Results.fileList_numFiles;
 
 filesep_=filesep;
 
@@ -37,9 +39,9 @@ else
     filesep_='/';
 end
 
-fieldlist=varargin;
-
-keyList=obj.genList(fieldlist{:});
+fieldlist=rmfield(p.Results,'fileList_numFiles');
+a=[fieldnames(fieldlist)' ; struct2cell(fieldlist)'];
+keyList=obj.genList(a{:});
 
 list=[];
 
@@ -93,6 +95,12 @@ end
 
 fileList=fileList(~isFolder);
 fileList=unique(fileList,'stable');
+
+if Numfiles==1
+    fileList=fileList{1};
+elseif ~isnan(Numfiles)
+    fileList=fileList(1:max([Numfiles,numel(fileList)]));
+end
 
 end
 

@@ -197,12 +197,14 @@ classdef FileManager
                 p.addParameter(folderLevels{i},{'*'},validStrOrCell);
             end 
             p.addParameter('Root',obj.root)
+            p.addOptional('fileList_numFiles',nan,@isnumeric);
 
             p.parse(varargin{:});
 
             Root = p.Results.Root;
 
             filesep_=filesep;
+            Numfiles=p.Results.fileList_numFiles;
 
             % Get the real path of Root:
             if ~obj.useFullFileList            
@@ -248,6 +250,12 @@ classdef FileManager
             keyList=join(a,filesep_);
             
             
+            if Numfiles==1
+                keyList=keyList{1};
+            elseif ~isnan(Numfiles)
+                keyList=keyList(1:max([Numfiles,numel(keyList)]));
+            end
+
             function out=str2cell(x)
                 if (ischar(x))
                     out={x};

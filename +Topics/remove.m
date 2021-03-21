@@ -48,7 +48,7 @@ for i=1:size(trial_data,1)
             fields=split(topics_list{msg_idx},'.');            
             for field_idx=fliplr(1:numel(fields))                
                 if (length(fields)==1)  % Arrived to root level
-                      eval(sprintf('selected=rmfield(selected,''%s'');',char(fields(end))));    
+                    eval(sprintf('selected=rmfield(selected,''%s'');',char(fields(end))));    
                     break;
                 end
                 prefix=fields(1:end-1);
@@ -57,7 +57,7 @@ for i=1:size(trial_data,1)
                 if isempty(b)                    
                     fields=fields(1:end-1);
                 else
-                    eval(sprintf('selected.%s=rmfield(selected.%s,''%s'');',a,a,char(fields(end))));    
+                    eval(sprintf('selected.%s=rmfield(selected.%s,''%s'');',a,a,char(fields(end))));                       
                     break;
                 end
             end        

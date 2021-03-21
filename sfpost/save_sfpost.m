@@ -99,13 +99,13 @@ trialFieldsTbl=cell2table(cell(n,numel(levels)),'VariableNames',levels);
 
 for i = 1:numel(levels)
     field=levels{i};
-    content=cellfun(@(x)(x.info.(field)),EpicToolboxStruct,'Uni',0);
+    content=cellfun(@(x)(GetInfoField(x,field)),EpicToolboxStruct);
     trialFieldsTbl.(field)=content;
 end
 
 for i = 1:numel(otherFields)
     field=otherFields{i};
-    content=cellfun(@(x)(x.info.(field)),EpicToolboxStruct,'Uni',0);
+    content=cellfun(@(x)(GetInfoField(x,field)),EpicToolboxStruct);
     otherFieldsTbl.(field)=content;
 end
 
@@ -181,6 +181,13 @@ end
 
 
 
+end
+
+function fieldvalue=GetInfoField(trial,field)
+    fieldvalue=trial.info.(field);
+    if ischar(fieldvalue)
+        fieldvalue={fieldvalue};
+    end
 end
 
 %{
