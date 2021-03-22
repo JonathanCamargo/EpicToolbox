@@ -1,12 +1,12 @@
 function allTrialsData=EpicToolbox(obj, fileList)
-% For an list of files from sf_post combine all the sensors
-% of the same trial into a mat file matching the structure for usage with
-% EpicToolbox. Intended to retrieve data in small chunks without writing
-% files.
-%
-% trialData=EpicToolbox(fileList)
-
-%% Transform data for EpicToolbox
+% allTrialsData=filemanagerobject.EpicToolbox(fileList)
+% For an list of files from the file manager, combine all the sensors
+% of the same trial into a struct. To use this function, the FileManager
+% must have a 'Sensor' level in the PathStucture. 
+% 
+% Now you can use allTrialsData with the tools from EpicToolbox
+% https://github.com/JonathanCamargo/EpicToolbox
+% 
 
 %% Combine data from different sensors into one struct
 

@@ -1,25 +1,36 @@
-% Class for convenient handling of files in structured directory with
-% repetitive patterns.
+% Handling of files in structured directory with a fixed path pattern.
 %
-% Since this was first conceived for sensor fusion data that has the structure:
-%  STUDY/AMBULATION/SENSOR/SUBJECT/DATE/trialname.ext
-% The class operates with that structure by default
+% Construct a FileManager object and use its member functions to find files
+% by matching patterns, create new paths with parameters and facilitate
+% handling multiple files in nested directories.
 %
-% Construct a FileManager object and use its member functions
-%
-% Using default behavior (sensor fusion structure)
 % f=FileManager();
 %
 % Using other folder pattern
-% f=FileManager(rootDir,'PathStructure',{'folderLevel1','folderLevel2','folderLevel3'});
-% This specifies how the data is nested inside folders
+% f=FileManager(rootDir,'PathStructure',{'folderLevel1','folderLevel2','fileLevel'});
+% For files stored in <rootDir>/<folderLevel1>/<folderLevel2>/<fileLevel.extension>
+% Then you can use methods of file manager, for example f.fileList().
+% 
+% An example of use is when storing of experiment data where you
+% have multiple subjects, dates and sensor data. If you have files
+% stored in C:\mydata\<SubjectIdentifier>/<DateOfExperiment>/<Sensor.mat> you can
+% create a filemanager:
+% 
+% f=FileManager('C:\\mydata','PathStructure',{'Subject','Date','Sensor'});
+% 
+% Then you can find files that belong to a particular subject:
+% f.fileList('Subject','Subject1')
 %
-% Get a list of files with fileList
+% All the files of emg data that belong to subject 1
+% f.fileList('Subject','Subject1','Sensor','emg.mat')
+% 
+% All the files of emg for any subject
+% f.fileList('Sensor','emg.mat')
 %
-% see also: FileManager,fileList,modFileList,EpicToolbox
+%
+% see also: FileManager,fileList,modFileList,genFields,EpicToolbox,
 
-classdef FileManager
-    
+classdef FileManager    
     
     properties
         folderLevels={};
@@ -29,27 +40,26 @@ classdef FileManager
     end
     
     properties (Access=public)
-        fullFileList={};
-        
+        fullFileList={};        
     end
     
     methods
         function obj=FileManager(root,varargin)
-            % Class for convenient handling of files in structured directory with
-            % repetitive patterns.
             % FileManager(root)
+            % Class for convenient handling of files in structured directory with
+            % a fixed path pattern.
+            %
             % 
             % FileManager(varargin)
-            % ----------------------------------------------
-            %  name    value1/value2/(default)  Description
-            % ----------------------------------------------                        
-            % 'PathStructure'       |
-            % ({'Ambulation','Sensor','Subject','Date','Trial'})    | Structure of how files are saved
-            % 'ShowRoot'            | (false)                       | Treat the files as absolute path by always prepending the root
-            % 'FullFileList'        | ({})                          | An internal representation of all the files to eliminate the amount of disk readings.
-            narginchk(0,6);
-            %Default constructor (empty)
+            % ----------------------------------------------            
+            % Name-Value pair options
+            % 'PathStructure'       |  e.g. {'Ambulation','Sensor','Subject','Date','Trial'})    | Cell array describing the structure of how files are saved
+            % 'ShowRoot'            | (false) / tue                 | Treat the file references as absolute path by always prepending the root
+            % 'FullFileList'        | ({})                          | An internal representation of all the files to eliminate            % multiple disk readings
             
+            
+            narginchk(0,6);
+            %Default constructor (empty)            
             defaultPathStructure={'File'};
             p=inputParser();
             p.addRequired('Root',@(x)isValidRootDir(x));
@@ -83,8 +93,7 @@ classdef FileManager
             else
                 obj.useFullFileList=false;
             end
-            
-            
+                        
             function isvalid=isValidRootDir(rootDir)
                 isvalid=true;
                 if ~ischar(rootDir)
@@ -159,8 +168,7 @@ classdef FileManager
             if structOutput
                varargout={cell2struct(varargout,obj.folderLevels)};
             end
-            
-            
+                        
             
         end
          
@@ -266,38 +274,13 @@ classdef FileManager
             end
 
 
-        end
-            
-            
-            
-       
-        
+        end                                                   
         fileList=fileList(obj,varargin);
         fileList=modFileList(obj,fileList,varargin);
         trialData=EpicToolbox(obj, fileList);
     end
-    
-    
-    
-    methods (Static)
-        
-        % Todo Are this updated?
-        %combine(matfiles,varargin);
-                
-        %download(params);
-        
-        %export2EpicToolbox(inputFolder,outputFolder);
-        
-        
-        
-        %fun(fun,params);
-        
-        %post();
-        
-        
-        
-        
-        
+            
+    methods (Static)                        
     end
     
     
