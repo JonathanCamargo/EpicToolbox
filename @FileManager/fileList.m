@@ -18,8 +18,8 @@ validStrOrCell=@(x) isstruct(x) || iscell(x) || ischar(x);
 for i=1:(numel(folderLevels))
     p.addParameter(folderLevels{i},{'*'},validStrOrCell);
 end 
-p.addParameter('Root',obj.root)
-p.addOptional('fileList_numFiles',nan,@isnumeric);
+p.addParameter('Root',obj.root,validStrOrCell)
+p.addOptional('fileList_numFiles',nan,@(x)isnumericOrHelp(x,obj));
 
 p.parse(varargin{:});
 
@@ -110,6 +110,14 @@ function out=str2cell(x)
     end
     if (iscell(x))
         out=x;
+    end
+end
+
+function isnumericOrHelp(value,obj)
+    a=isnumeric(value);
+    levelsstr=sprintf('\t%s\n',obj.folderLevels{:});
+    if ~a
+        error(['Wrong arguments provided verify that your folder levels are one of: ' levelsstr ]);
     end
 end
 
