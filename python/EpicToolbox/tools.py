@@ -46,7 +46,7 @@ def GetData(input,x_options,y_options,combine=True,n_jobs=1,filemanager_scope=No
     for trial in alltrials:
         topics=list(x_options.keys())
         channels=[x_options[topic] for topic in topics]
-        outtrial_x=Topics.select(trial,topics,channels)
+        outtrial_x=Topics.select(trial,topics,channels,search='match')
         outtrials_x.append(outtrial_x)
 
     outtrials_y=list()
