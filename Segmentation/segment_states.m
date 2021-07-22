@@ -13,7 +13,7 @@ function segmented= segment_states(trial_data,topic,channel,varargin)
 %        Options: '', channel to do the segmentation 
 %                 
 
-narginchk(1,4);
+narginchk(1,5);
 % Use input parser to find the desired option
 
 p=inputParser;
@@ -24,9 +24,14 @@ p.addParameter('States',{},validStrOrCell);
 p.parse(varargin{:});
 
 states=p.Results.States;
+topicsplt=strsplit(topic,'.');
+
 if isempty(states)
-    topicsplt=strsplit(topic,'.');
     states=unique(getfield(trial_data,topicsplt{:},channel));
+end
+
+if ~iscell(states)
+    states={states};
 end
 
 % Use findTimes to determine when is entering or leaving 
