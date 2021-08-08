@@ -16,7 +16,7 @@ narginchk(1,2);
 if nargin==2
     topics_list=varargin{1};
 else
-    topics_list=Topics.fields;
+    topics_list=Topics.topics(data);
 end
 
 

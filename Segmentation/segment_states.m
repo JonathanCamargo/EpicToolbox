@@ -13,7 +13,7 @@ function segmented= segment_states(trial_data,topic,channel,varargin)
 %        Options: '', channel to do the segmentation 
 %                 
 
-narginchk(1,4);
+narginchk(1,5);
 % Use input parser to find the desired option
 
 p=inputParser;

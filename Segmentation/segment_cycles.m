@@ -12,11 +12,16 @@ function segmented= segment_cycles(trial_data,varargin)
 %        segment_cycles(experiment_data);
 
 
-if nargin==2
+if nargin==3
     % List of messages to process:
     messages_list=varargin{1};
+    statename=varargin{2};
+elseif nargin==2
+    messages_list=Topics.topics(trial_data);
+    statename=varargin{1};
 elseif nargin==1
     messages_list=Topics.topics(trial_data);
+    statename='LW_EarlyStance';
 else
     error('Wrong number of arguments please check documentation');
 end
@@ -25,7 +30,7 @@ end
 % i.e. count blocks EarlyStance-EarlyStance in the fsm.State
 states=[trial_data.fsm.State.State];
 times=trial_data.fsm.State.Header;
-index=find(strcmp(states,'LW_EarlyStance'))';
+index=find(strcmp(states,statename))';
 % index=find(contains(states,'EarlyStance'))';
 earlyStanceTimes=times(index);
 

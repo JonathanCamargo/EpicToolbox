@@ -67,6 +67,9 @@ for j=1:numel(channels)
     % Plot
     t=data.Header;
     x=data.(channel);
+    if isempty(x)
+        continue;
+    end
     if ( (~isnumeric(x(1))) && (iscell(x(1))) )
         if (ischar(x{1}))
             plot_labels(t,x,varargin{:});
