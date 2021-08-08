@@ -114,10 +114,6 @@ H.mainLine.Annotation.LegendInformation.IconDisplayStyle='off';
 
 if ~holdStatus, hold off, end
 
-
-uistack(H.patch,'bottom');
-uistack(H.edge(1),'bottom');
-uistack(H.edge(2),'bottom');
-uistack(H.mainLine,'bottom');
+uistack([H.patch H.edge(1) H.edge(2) H.mainLine],'bottom');
 
 varargout={H};

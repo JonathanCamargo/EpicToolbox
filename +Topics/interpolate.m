@@ -39,15 +39,31 @@ function interpolated_table=interpolate_table(table_data,T,Extrapolation)
     % Interpolate the data in a table using a spline
     % if data is not numeric it will be repeated till a new value exists.
     if ~iscolumn(T);T=T';end    
-    tx=table_data.Header;
-    try
+    vars=table_data.Properties.VariableNames(2:end);
+    isnumericvar=false(1,numel(vars));
+    for i=1:numel(vars)
+        isnumericvar(i)=isnumeric(table_data.(vars{i}));
+    end
+    idxnumeric=find(isnumericvar);
+    idxnonnumeric=find(~isnumericvar);
+    if isempty(idxnumeric)
+        numtable=array2table(T,'VariableNames',{'Header'});
+    else
+        numtable=interpolate_table_with_numeric(table_data(:,[1 idxnumeric+1]),T,Extrapolation);
+    end
+    nonnumtable=interpolate_table_with_nonnumeric(table_data(:,[1 idxnonnumeric+1]),T);
+    [~,idx]=sort([idxnumeric idxnonnumeric]);
+    
+    interpolated_table=[numtable nonnumtable(:,2:end)];
+    interpolated_table=interpolated_table(:,[1 idx+1]);
+end
+
+function interpolated_table=interpolate_table_with_numeric(table_data,T,Extrapolation)
+        tx=table_data.Header;        
         x=table_data{:,2:end};    
         xinterp=interp1(tx,x,T,'linear',Extrapolation);
         interpolated_table=array2table([T xinterp]);
-        interpolated_table.Properties=table_data.Properties;
-    catch
-        interpolated_table=interpolate_table_with_nonnumeric(table_data,T);
-    end
+        interpolated_table.Properties=table_data.Properties;        
 end
 
 

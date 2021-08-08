@@ -30,16 +30,20 @@ topics=all_topics;
 if ~isempty(read)
     index=zeros(length(all_topics),1);
     for i=1:length(read)
-        mask=strcmp(all_topics,read(i));
-        index=index|mask;
+        mask1=strcmp(all_topics,read(i));
+        mask2=regexp(all_topics,read(i));
+        mask2=~cellfun(@isempty,mask2);
+        index=index | mask1 | mask2;
     end
     topics=all_topics(index);
 end
 if ~isempty(ignore)
     index=zeros(length(topics),1);
     for i=1:length(ignore)
-        mask=strcmp(topics,ignore(i));
-        index=index|mask;
+        mask1=strcmp(topics,ignore(i));
+        mask2=regexp(topics,ignore(i));
+        mask2=~cellfun(@isempty,mask2);
+        index=index | mask1 | mask2;
     end
     topics=topics(~index);
 end
