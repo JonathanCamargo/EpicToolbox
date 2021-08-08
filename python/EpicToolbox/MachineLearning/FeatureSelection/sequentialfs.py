@@ -45,7 +45,7 @@ def multisubject_cv_score(model,scorer,subjectsX,subjectsY,features=None,cv=None
     subjects within cv scores.
     '''
     if features is None:
-        features=np.arange(0,X.shape[1])
+        features=np.arange(0,subjectsX[0].shape[1])
 
     subjectsScores=[]
     subjectsOthers=[]

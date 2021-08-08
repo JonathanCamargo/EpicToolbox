@@ -24,9 +24,14 @@ p.addParameter('States',{},validStrOrCell);
 p.parse(varargin{:});
 
 states=p.Results.States;
+topicsplt=strsplit(topic,'.');
+
 if isempty(states)
-    topicsplt=strsplit(topic,'.');
     states=unique(getfield(trial_data,topicsplt{:},channel));
+end
+
+if ~iscell(states)
+    states={states};
 end
 
 % Use findTimes to determine when is entering or leaving 
