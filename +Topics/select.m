@@ -36,7 +36,9 @@ end
 if isempty(p.Results.Channels)
     channel_list=repmat({''},size(topics_list));
 elseif ischar(p.Results.Channels)
-    channel_list=repmat({{p.Results.Channels}},size(topics_list));
+    channel_list=repmat({{p.Results.Channels}},size(topics_list));   
+elseif iscell(p.Results.Channels) && ~iscell(p.Results.Channels{1})
+    channel_list=repmat({p.Results.Channels},size(topics_list));  
 elseif iscell(p.Results.Channels) && (numel(p.Results.Channels)~=numel(topics_list))
     error('Channels dimensions do not match with topics list');
 else
