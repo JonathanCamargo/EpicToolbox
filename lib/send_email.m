@@ -8,8 +8,8 @@ if nargin>3
 else
     attachments=[];
 end
-user = 'jorpez07@gmail.com';
-mail = 'jorpez07@gmail.com';
+user = 'someemail@gmail.com';
+mail = 'someemail@gmail.com';
 psswd = password;
 host = 'smtp.gmail.com';
 port  = '465';
