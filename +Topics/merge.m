@@ -35,7 +35,7 @@ if isstruct(trial_data1)
            nTrials=nTrials+1;
        end      
    end
-   if i==1; error('No second trial to merge with');end
+   if nTrials==1; warning('No second trial to merge with');end
    alltrials=[{trial_data1},varargin(1:nTrials-1)];
 elseif iscell(trial_data1)
     % TODO [NOT STABLE] User tries to merge every i,j,k,... of a cell array
@@ -49,7 +49,7 @@ elseif iscell(trial_data1)
            nTrials=nTrials+1;
        end
     end    
-    if isempty(varargin) || i==1
+    if isempty(varargin) || nTrials==1
         % No second trial to merge with, user wants to merge all the trials
         % in this cell array as a single trial.
         merged=Topics.merge(trial_data1{:},varargin{:});            

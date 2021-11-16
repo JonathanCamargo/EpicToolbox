@@ -24,7 +24,7 @@ function save_sfpost(EpicToolboxStruct,varargin)
 narginchk(0,6);
 p=inputParser();
 p.addParameter('FileManager',[],@(x)isa(x,'FileManager'));
-p.addParameter('hdf5',false,@islogical);
+p.addParameter('OutputType','mat',@(x)(ismember(x,{'hdf5','mat','csv'})));
 p.addParameter('Overwrite',true,@islogical);
 p.addParameter('SplitTopics',false,@islogical);
 
@@ -32,7 +32,7 @@ p.parse(varargin{:});
 f=p.Results.FileManager;
 
 Overwrite=p.Results.Overwrite;
-isHDF5=p.Results.hdf5;
+OutputType=p.Results.OutputType;
 SplitTopics=p.Results.SplitTopics;
 
 % List of files to be written to.
@@ -137,17 +137,25 @@ for i=1:numel(EpicToolboxStruct)
     sensors=Topics.topics(EpicToolboxStruct{i},'Recursive',SplitTopics);            
     for j=1:numel(sensors)
         outfile=f.genList(arguments{:},sensorlevel,sensors{j});
-        [~,~,ext]=fileparts(outfile{1});
-        if ~strcmp(ext,'.mat')
-            outfile{1}=[outfile{1} '.mat'];
-        end
+        [~,~,ext]=fileparts(outfile{1});      
         mkdirfile(outfile{1});
         if (Overwrite || ~exist(outfile{1},'file'))
             data=eval(sprintf('EpicToolboxStruct{i}.%s',sensors{j}));
-            if ~isHDF5
+            if strcmp(OutputType,'mat')
+                if ~strcmp(ext,'.mat')
+                    outfile{1}=[outfile{1} '.mat'];
+                end            
                 save(outfile{1},'data');    
-            else
-            	table2hdf5(data,outfile{1});
+            elseif strcmp(OutputType,'hdf5')
+                if ~strcmp(ext,'.mat') % Maybe use hdf5 instead?
+                   outfile{1}=[outfile{1} '.mat'];
+                end            
+                table2hdf5(data,outfile{1});
+            elseif strcmp(OutputType,'csv')
+                if ~strcmp(ext,'.csv')
+                     outfile{1}=[outfile{1} '.csv'];
+                end            
+                writetable(data,outfile{1});
             end
         end
     end
